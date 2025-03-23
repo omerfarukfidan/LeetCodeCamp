@@ -51,4 +51,39 @@ n == tickets.length
 1 <= n <= 100
 1 <= tickets[i] <= 100
 0 <= k < n
+
+3:34:35 minute
 """
+# MY SOLUTION
+class Solution:
+    def timeRequiredToBuy(self, tickets: List[int], k: int) -> int:
+
+        my_queue = deque()
+        my_queue.extend(tickets)
+
+        # pointer = k #our customers location kth we will track our customer location with that
+        time = 0  # passed time will be stored in this variable
+
+        while k != -1:
+            if (my_queue[0] - 1) > 0 and k > 0:
+                temp_ticket_number = my_queue.popleft() - 1
+                k -= 1
+                my_queue.append(temp_ticket_number)
+                time += 1
+            elif (my_queue[0] - 1) == 0 and k > 0:
+                my_queue.popleft()
+                k -= 1
+                time += 1
+            elif (my_queue[0] - 1) > 0 and k == 0:
+                temp_ticket_number = my_queue.popleft() - 1
+                my_queue.append(temp_ticket_number)
+                k = len(my_queue) - 1
+                time += 1
+            elif (my_queue[0] - 1) == 0 and k == 0:
+                my_queue.popleft()
+                k = - 1
+                time += 1
+
+        return time
+
+# THERE IS BETTER SOLUTION 3:34:35 minute
